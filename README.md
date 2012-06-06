@@ -2,9 +2,28 @@
 
 Jarvis enables you to easily create web aplications that use speech recogniton.
 
-## Usage
+## Organization
 
-FIXME
+There are 3 parts to the "platform"
+
+* jarvis-web is the web page and admin panal for the system. Consumes
+the API.
+* jarvis-lib is the javascript library that uses the system.
+* Everything else has to do with the API, runs on heroku.
+
+## API
+
+Clojure app running on heroku
+Bishop frontend,
+rendering and matching logic runs on worker nodes
+redis queue used for communication internally
+postgres database used for app and user data
+
+endpoints for
+
+* setting up and managing apps and rules
+* sending speech
+* retrieving results (long polling probably for now)
 
 ## TODO
 The first main steps that need to be accomplished before anything else
