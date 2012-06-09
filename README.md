@@ -1,6 +1,17 @@
 # jarvis
 
-Jarvis enables you to easily create web aplications that use speech recogniton.
+Jarvis enables you to easily create web aplications that use speech
+recogniton.
+
+## Running Locally
+
+Must have redis and postgres installed (locally or somewhre that can
+be hit by local processes)
+Set the following environment variables
+
+* POSTGRES_URL "jdbc:postgresql://my.host:port/database?user=username&password=mahpass&ssl=true"
+* REDIS_URL    "redis://username:password@my.host:port"
+
 
 ## Organization
 
@@ -29,7 +40,7 @@ endpoints for
 The first main steps that need to be accomplished before anything else
 can be done.
 
-* Get cmuSphinx working well in clojure.
+* Get Sphinx4 working well in clojure.
 * Capture audio from javascript and send it to the server in a form
 that can be used by cmuSphinx.
 
