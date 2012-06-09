@@ -1,3 +1,5 @@
+.env
+
 /target
 /lib
 /classes
@@ -8,3 +10,12 @@ pom.xml
 .lein-deps-sum
 .lein-failures
 .lein-plugins
+
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+.elc
+auto-save-list
+tramp
+.\#*
