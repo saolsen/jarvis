@@ -5,13 +5,15 @@ recogniton.
 
 ## Running Locally
 
-Must have redis and postgres installed (locally or somewhre that can
+Must have redis and postgres running (locally or somewhere that can
 be hit by local processes)
+Two redis instances are used, one for the communication queue and one
+as a distributed hash-map
 Set the following environment variables
 
 * POSTGRES_URL "jdbc:postgresql://my.host:port/database?user=username&password=mahpass&ssl=true"
-* REDIS_URL    "redis://username:password@my.host:port"
-
+* REDIS_QUEUE_URL    "redis://username:password@my.host:port"
+* REDIS_STORE_URL    "redis://username:password@my.host:port"
 
 ## Organization
 
@@ -50,9 +52,3 @@ Then later all the fun can come,
 * Make a heroku app that does the stt and the rule matching.
 * Flesh out the javascript library.
 * Profit!
-
-## License
-
-Copyright © 2012 FIXME
-
-Distributed under the Eclipse Public License, the same as Clojure.

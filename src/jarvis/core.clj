@@ -6,7 +6,7 @@
 ;; on directly.
 
 (ns jarvis.core
-  (:require [jarvis.recognizer.core :as recognizer]
+  (:require [jarvis.transcriber.core :as transcriber]
             [jarvis.environment :as environment]
             [jarvis.resources :as resources]
             [jarvis.db.postgres :as pg]
