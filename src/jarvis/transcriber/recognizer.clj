@@ -26,3 +26,7 @@
   (let [resource (clojure.java.io/resource filename)]
     (doto (.lookup cm "audioFileDataSource")
       (.setAudioFile (File. filename) nil))))
+
+(defn go!
+  [rec]
+  (.getBestResultNoFiller (.recognize rec)))
