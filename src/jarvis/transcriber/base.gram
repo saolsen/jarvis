@@ -1,0 +1,10 @@
+#JSGF V1.0;
+
+/**
+ * JSGF base grammar
+ */
+
+grammar base;
+
+public <numbers> = (oh | zero | one | two | three | four | five | six | seven |
+eight | nine) * ;

@@ -3,7 +3,8 @@
   (:import
    (java.io File)
    (edu.cmu.sphinx.util.props ConfigurationManager)
-   (edu.cmu.sphinx.recognizer Recognizer)))
+   (edu.cmu.sphinx.recognizer Recognizer)
+   (com.sun.speech.engine.recognition BaseRecognizer)))
 
 (defn get-cm
   "Gets a configuration Manager"
@@ -11,8 +12,19 @@
   (let [config-file (clojure.java.io/resource "config-file.xml")]
     (ConfigurationManager. config-file)))
 
-(defn get-recognizer
-  "Creates a recognizer"
+(defn get-grammar
+  "Gets the jsgf grammar"
   [cm]
-  (doto (.lookup cm "recognizer")
-    (.allocate)))
+  (.lookup cm "jsgfGrammar"))
+
+(defn get-grecon
+  [cm grammar]
+  (BaseRecognizer. (.getGrammarManager grammar)))
+
+(defn get-recognizer
+  [cm]
+  (.lookup cm "recognizer"))
+
+(defn allocate
+  [rec]
+  (.allocate rec))
