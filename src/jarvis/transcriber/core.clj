@@ -1,6 +1,6 @@
 (ns jarvis.transcriber.core
-  (:import
-   (edu.cmu.sphinx.recognizer Recognizer)))
+  (:require [jarvis.transcriber.utility :as util])
+  (:import (java.io File)))
 
 ;; This is the lest functional part of the code as it deals with
 ;; pre-existing java classes.
@@ -15,9 +15,38 @@
 ;; 3) Because the grammars can be swapped like this we don't have to
 ;;    create a new recognizer each time the app changes. This is fast
 ;;    and works quite nicely.
+(defonce config-manager (util/get-cm))
+(defonce recognizer (atom nil))
 
-(defonce recognizer (recog/get-recognizer))
-
-(defn hello
+(defn allocate
+  "Creates and allocates recognizer, must be called first"
   []
-  (println "hello world"))
+  (reset! recognizer (util/get-recognizer config-manager)))
+
+(defn load-audio
+  "Takes a File object."
+  [audiofile]
+  (doto (.lookup config-manager "audioFileDataSource")
+    (.setAudioFile audiofile nil)))
+
+(defn load-grammar
+  []
+  nil)
+
+(defn recognize
+  "Recognizes the currently loaded audio with the currently loaded grammar"
+  []
+  (.getBestResultNoFiller (.recognize @recognizer)))
+
+(defn deallocate
+  "Deallocates the recognizer"
+  []
+  (.deallocate @recognizer))
+
+;; Tests should be moved elsewhere
+(def audiofile "10001-90210-01803.wav")
+(defn quicktest
+  []
+  (do
+    (load-audio (File. audiofile))
+    (recognize)))
