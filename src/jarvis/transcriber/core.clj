@@ -1,5 +1,6 @@
 (ns jarvis.transcriber.core
-  (:require [jarvis.transcriber.utility :as util])
+  (:require [jarvis.transcriber.utility :as util]
+            [jarvis.transcriber.grammar :as grammar])
   (:import (java.io File)))
 
 ;; This is the lest functional part of the code as it deals with
@@ -9,13 +10,10 @@
 ;; managed internally in this namespace. Because of this a few things
 ;; happen.
 ;; 1) Call allocate to set everything up.
+;; 2) Pass app-grammars to setup-grammars to save them to disk.
 ;; 2) Then you can load audio files and grammars and call recognize.
-;;    - or
+;;    - or call load-and-recognize
 ;; 3) Once finished call deallocate.
-
-;; This execution flow is really messed up because I'm trying to
-;; follow the java examples that I have. Once it's working it should
-;; be gone over and made a bit friendlier/verbose/flexable
 
 (defonce config-manager (util/get-cm))
 (defonce grammar (util/get-grammar config-manager))
@@ -31,16 +29,24 @@
     (util/allocate @grecon)
     (util/allocate @recognizer)))
 
+(defn setup-grammars
+  "Saves the app grammars to local filesystem so they can be read later"
+  [app-grammars]
+  (grammar/load-grammars app-grammars))
+
 (defn load-audio
   "Takes a File object."
   [audiofile]
   (doto (.lookup config-manager "audioFileDataSource")
     (.setAudioFile audiofile nil)))
 
-(defn load-grammar-rules
-  "Takes a list of strings that are potential matches."
-  [lst]
-  nil)
+(defn load-grammar
+  "Loads a grammar"
+  [name]
+  ;; Currently I think the only way to do this is from the local
+  ;; filesystem so this will need working on.
+  ;; Add in a "get the grammar to the filesystem step"
+  (.loadJSGF grammar name))
 
 (defn recognize
   "Recognizes the currently loaded audio with the currently loaded grammar"
@@ -49,21 +55,13 @@
 
 (defn load-and-recognize
   "Loads a grammar and a file and recognizes it"
-  [audiofile grammar]
+  [audiofile app-id]
   (do
     (load-audio audiofile)
-    (load-grammar-rules [])
+    (load-grammar app-id)
     (recognize)))
 
 (defn deallocate
   "Deallocates the recognizer"
   []
   (.deallocate @recognizer))
-
-;; Tests should be moved elsewhere
-(def audiofile "10001-90210-01803.wav")
-(defn quicktest
-  []
-  (do
-    (load-audio (File. audiofile))
-    (recognize)))
