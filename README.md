@@ -1,3 +1,7 @@
+**NOTE**: I'm not actively working on this anymore and it is in an unfinished state. I've decided to open source it anyway and while it's not fully functional the transcription code does mostly work and could be useful to anyone trying to get Sphinx to work in clojure.
+
+-------------------------------
+
 # jarvis
 
 Jarvis enables you to easily create web aplications that use speech
